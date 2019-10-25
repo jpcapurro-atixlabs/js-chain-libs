@@ -240,9 +240,14 @@ body {
   // is not yet defined correctly in our UI
   font-family: 'Times New Roman', serif;
   -webkit-font-smoothing: antialiased;
-  height: 100%;
   user-select: none;
+  height: 100%;
+  width: 100%;
+}
+
+#root {
   background-color: #121326;
+  height: 100%;
   width: 100%;
 }
 
