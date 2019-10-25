@@ -21,6 +21,10 @@ export default {
           }
         }
       },
+      {
+        test: /\.inline\.svg$/,
+        use: 'svg-inline-loader'
+      },
       // WOFF Font
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
@@ -58,17 +62,6 @@ export default {
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
         use: 'file-loader'
-      },
-      // SVG Font
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: 'url-loader',
-          options: {
-            limit: 10000,
-            mimetype: 'image/svg+xml'
-          }
-        }
       },
       // OTF Font
       {
