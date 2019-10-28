@@ -1,7 +1,9 @@
 .component {
   align-items: center;
-  background-color: var(--theme-dialog-big-button-background-color);
-  border: solid 1px var(--theme-dialog-big-button-border-color);
+  background-color: var(--primary);
+  border: solid 1px var(--primary);
+  color: var(--gray-dark);
+  font-weight: 500;
   border-radius: 10px;
   cursor: pointer;
   display: flex;
@@ -22,22 +24,18 @@
   & > svg {
     height: 48px;
     path {
-      fill: var(--theme-icon-add-wallet-dialog-big-button-color);
+      fill: var(--gray-dark);
     }
   }
 }
 
 .label {
-  color: var(--theme-dialog-big-button-label-color);
-  font-family: var(--font-medium);
   font-size: 19px;
   line-height: 1.37;
   margin-top: 20px;
 }
 
 .description {
-  color: var(--theme-dialog-big-button-description-color);
-  font-family: var(--font-regular);
   font-size: 14px;
   height: 19px;
   line-height: 1.36;
