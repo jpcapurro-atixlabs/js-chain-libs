@@ -1,6 +1,7 @@
 // @flow
 import config from 'config';
 import type { AccountKeys, NodeSettings } from '../reducers/types';
+import type { PoolId as InternalPoolId } from '../models';
 import feeCalculator from './feeCalculator';
 
 const wasmBindings = import('js-chain-libs/js_chain_libs');
@@ -36,7 +37,7 @@ export async function getAccountFromPrivateKey(
 }
 
 export async function buildDelegateTransaction(
-  poolId: PoolId,
+  poolId: InternalPoolId,
   secret: string,
   accountCounter: number,
   nodeSettings: NodeSettings
@@ -70,23 +71,25 @@ export async function buildDelegateTransaction(
   );
 
   // 1 input + 1 certificate
-  const computedFee = calculateFee(1, 0, 1);
+  const computedFee: number = calculateFee(1, 0, 1);
   const input: Input = Input.from_account(
     sourceAccount,
     Value.from_str(computedFee.toString())
   );
   // Create certificate
-  const certificate = Certificate.stake_delegation(
+  const certificate: Certificate = Certificate.stake_delegation(
     StakeDelegation.new(PoolId.from_hex(poolId), sourcePublicKey)
   );
 
   certificate.sign(PrivateKey.from_bech32(secret));
 
-  const txbuilder = TransactionBuilder.new_payload(certificate);
+  const txbuilder: TransactionBuilder = TransactionBuilder.new_payload(
+    certificate
+  );
 
   txbuilder.add_input(input);
 
-  const feeAlgorithm = Fee.linear_fee(
+  const feeAlgorithm: Fee = Fee.linear_fee(
     Value.from_str(nodeSettings.fees.constant.toString()),
     Value.from_str(nodeSettings.fees.coefficient.toString()),
     Value.from_str(nodeSettings.fees.certificate.toString())
@@ -99,7 +102,7 @@ export async function buildDelegateTransaction(
   );
   const finalizer: TransactionFinalizer = new TransactionFinalizer(finalizedTx);
 
-  const witness = Witness.for_account(
+  const witness: Witness = Witness.for_account(
     Hash.from_hex(nodeSettings.block0Hash),
     finalizer.get_tx_sign_data_hash(),
     privateKey,
